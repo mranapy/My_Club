@@ -6,6 +6,7 @@ from . models import Venue, MyClubUser, Event
 admin.site.register(MyClubUser)
 admin.site.register(Event)
 @admin.register(Venue)
-class VenueAdmin(admin.ModelAdmin):
+class VenueAdmin(admin.ModelAdmin): # For backend 
 	list_display = ('name','address',)
 	# ordering = ('name',)
+	search_fields = ('name','address')
