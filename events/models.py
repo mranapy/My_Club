@@ -11,7 +11,7 @@ class Venue(models.Model):
 	email = models.EmailField('Email address',blank=True)
 
 	class Meta:
-		ordering = ('-name',)
+		ordering = ('name',)
 	def __str__(self):
 		return self.name
 
@@ -33,7 +33,9 @@ class Event(models.Model):
 	manager = models.CharField(max_length=120)
 	description = models.TextField(blank=True)
 	attendees = models.ManyToManyField(MyClubUser,blank=True)
-
+	
+	class Meta:
+		ordering = ('name',)
 	def __str__(self):
 		return self.name
 

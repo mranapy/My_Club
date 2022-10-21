@@ -1,0 +1,21 @@
+{% extends 'events/base.html' %}
+
+    {% block content %}
+
+      <h1>Venue List</h1><hr>  
+  {% for venue in venues %}
+      <div class="card bg-light mb-3">
+      <div class="card-header"><b>Venue name: {{venue.name}}</b></div>
+      <div class="card-body">
+      <ul>
+        <li>Address: {{venue.address}}</li>
+        <li>Email: {{venue.email}}</li>
+        <li>Website: {{venue.web}}</li>
+      </ul>
+      </div>
+    </div>
+      {% endfor %}
+      
+      
+    {% endblock content %}
+    

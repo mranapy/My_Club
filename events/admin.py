@@ -7,5 +7,5 @@ admin.site.register(MyClubUser)
 admin.site.register(Event)
 @admin.register(Venue)
 class VenueAdmin(admin.ModelAdmin):
-	list_display = ('name','address')
+	list_display = ('name','address',)
 	# ordering = ('name',)
