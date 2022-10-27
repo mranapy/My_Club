@@ -1,0 +1,20 @@
+{% extends 'events/base.html' %}
+
+    {% block content %}
+    <h1>Add Venue</h1><hr>  
+        {% if submitted %}
+          Venue added successfully!
+        {% else %}
+      <form action="" method="POST">
+        {% csrf_token %}
+          {% for form in venueform %}
+        <div class='form-group'>
+          {{form.label_tag}} {{form|capfirst}} 
+        </div>
+        {% endfor %}
+          <input type="submit" value="Save" class="btn btn-primary"> <br><br>
+      </form>
+     {% endif %}
+      
+    {% endblock content %}  
+    

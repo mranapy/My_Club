@@ -1,0 +1,23 @@
+{% extends 'events/base.html' %}
+
+    {% block content %}
+
+      <h1>Venue Details</h1> 
+          <div class="card bg-light mb-3">
+            <div class="card-header"><b>Venue name: {{venue.name}}</b>
+              <button class="btn btn-primary float-right">Booking Now</button>
+            </div>
+              <div class="card-body">
+                <ul>
+                  <li>Address: {{venue.address}}</li>
+                  <li>Email: {{venue.email}}</li>
+                  <li>Website: {{venue.web}}</li>
+                </ul>
+              </div>
+              <div class="text-center">
+                <a style="padding:8px;" href="{% url 'list-venue' %}">Back</a>
+              </div>
+          </div>
+
+    {% endblock content %}
+    

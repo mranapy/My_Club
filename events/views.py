@@ -3,7 +3,9 @@ import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
 from .models import Event, Venue
+from .forms import VenueForm
 from django.views.generic.list import ListView
+from django.http import HttpResponseRedirect
 # Create your views here.
 def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
 	month = month.capitalize()
@@ -41,3 +43,25 @@ def all_events(request):
 def all_venues(request):
 	venues = Venue.objects.all()
 	return render(request, 'events/venue_list.html', {'venues':venues})
+
+def add_venue(request):
+	submitted = False
+	if request.method == "POST":
+		venueform = VenueForm(request.POST)
+		if venueform.is_valid():
+			venueform.save()
+			submitted = True
+			return HttpResponseRedirect('/add-venue?submitted=True')
+	else:
+		venueform = VenueForm()
+		if 'submitted' in request.GET:
+			submitted = True
+	return render(request, 'events/add_venue.html',{
+				'venueform':venueform,
+				'submitted':submitted
+			})
+
+
+def show_venue(request, venue_id):
+	venue = Venue.objects.get(pk=venue_id)
+	return render(request, 'events/show_venue.html', {'venue':venue})
