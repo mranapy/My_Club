@@ -64,6 +64,25 @@ def add_venue(request):
 				'submitted':submitted
 			})
 
+# ---------- UPDATE VENUE ----------
+
+def update_venue(request, venue_id):
+	venue = Venue.objects.get(pk=venue_id)
+	form = VenueForm(request.POST or None, instance=venue)
+	if form.is_valid():
+		form.save()
+		return redirect('list-venue')
+	return render(request, 'events/update_venue.html',{'venue':venue,'form':form})
+
+# ---------- SHOW VENUE ----------
+def show_venue(request, venue_id):
+	try:
+		venue = Venue.objects.get(pk=venue_id)
+	except VenuesModel.DoesNotExist:
+            return HttpResponse('Exception: Data Not Found')
+	return render(request, 'events/show_venue.html', {'venue':venue})
+
+
 # ---------- ADD EVENT ----------
 def addEvent(request):
 	submitted = False
@@ -80,13 +99,6 @@ def addEvent(request):
 			submitted = True
 	return render(request, 'events/add_event.html',{'eventform':eventform,'submitted':submitted})
 
-# ---------- SHOW VENUE ----------
-def show_venue(request, venue_id):
-	try:
-		venue = Venue.objects.get(pk=venue_id)
-	except VenuesModel.DoesNotExist:
-            return HttpResponse('Exception: Data Not Found')
-	return render(request, 'events/show_venue.html', {'venue':venue})
 
 # ---------- SHOW EVENT ----------
 def show_event(request, event_id):
@@ -104,14 +116,6 @@ def search_any(request):
 			events = Event.objects.filter(name__icontains=searched)
 			return render(request, 'events/search.html',{'searched':searched,'venues':venues,'events':events})
 
-# ---------- UPDATE VENUE ----------
 
-def update_venue(request, venue_id):
-	venue = Venue.objects.get(pk=venue_id)
-	form = VenueForm(request.POST or None, instance=venue)
-	if form.is_valid():
-		form.save()
-		return redirect('list-venue')
-	return render(request, 'events/update_venue.html',{'venue':venue,'form':form})
 
 
