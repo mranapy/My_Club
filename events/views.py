@@ -5,7 +5,7 @@ from datetime import datetime
 from .models import Event, Venue
 from .forms import VenueForm
 from django.views.generic.list import ListView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 # Create your views here.
 def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
 	month = month.capitalize()
@@ -63,5 +63,21 @@ def add_venue(request):
 
 
 def show_venue(request, venue_id):
-	venue = Venue.objects.get(pk=venue_id)
+	try:
+		venue = Venue.objects.get(pk=venue_id)
+	except VenuesModel.DoesNotExist:
+            return HttpResponse('Exception: Data Not Found')
 	return render(request, 'events/show_venue.html', {'venue':venue})
+
+
+
+def search_any(request):
+	if request.method == "POST":
+		searched = request.POST['searched']
+		if searched == "":
+			return HttpResponseRedirect('/')
+		else:
+			venues = Venue.objects.filter(name__icontains=searched)
+			events = Event.objects.filter(name__icontains=searched)
+			return render(request, 'events/search.html',{'searched':searched,'venues':venues,'events':events})
+	

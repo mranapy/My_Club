@@ -9,6 +9,7 @@ urlpatterns = [
     path('venues/', views.all_venues, name='list-venue'),
     path('add-venue/', views.add_venue, name='add-venue'),
     path('show-venue/venuid?<venue_id>/', views.show_venue, name='show-venue'),
+    path('searchany/', views.search_any, name='searchany'),
     # path('venues/',views.VenueList.as_view(), name='list-venue'),
     
 ]

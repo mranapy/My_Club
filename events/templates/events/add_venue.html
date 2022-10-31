@@ -2,10 +2,11 @@
 
     {% block content %}
     <h1>Add Venue</h1><hr>  
-        {% if submitted %}
+        <div id=""  style="background-color:bisque;">
+          {% if submitted %}
           Venue added successfully!
         {% else %}
-      <form action="" method="POST">
+      <form action="" method="POST" style="padding:20px;">
         {% csrf_token %}
           {% for form in venueform %}
         <div class='form-group'>
@@ -15,6 +16,7 @@
           <input type="submit" value="Save" class="btn btn-primary"> <br><br>
       </form>
      {% endif %}
+        </div>
       
     {% endblock content %}  
     
