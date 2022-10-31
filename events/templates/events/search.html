@@ -7,6 +7,9 @@
       <!-- {% else %}
       <h2 class="text-danger" style="padding-top: 5rem;">Hey! You forget to search...</h2>
       {% endif %} -->
+      {% if venues %}
+        <h3>Venues</h3>
+      {% endif %}
       {% for venue in venues %}
         <div class="row">
           <div class="col-lg-4 offset-lg-4 text-center">
@@ -22,6 +25,10 @@
       </div>
     </div>
         {% endfor %}
+      
+      {% if events %}
+        <h3>Events</h3>
+      {% endif %}
       {% for event in events %}
         <div class="row">
           <div class="col-lg-4 offset-lg-4 text-center">
@@ -29,7 +36,7 @@
             <tbody>
               <tr>
               <td>
-                <a style="color:white !important; text-decoration: none;" href="#">{{event}}</a>
+                <a style="color:white !important; text-decoration: none;" href="{% url 'show-event' event.id %}">{{event}}</a>
               </td>
               </tr>
         </tbody>

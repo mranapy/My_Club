@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 from .models import Event, Venue
 from .forms import VenueForm
 from django.views.generic.list import ListView
@@ -40,9 +41,11 @@ def all_events(request):
 # 	context_object_name = 'venues'
 # 	ordering = {'name'}
 
+
 def all_venues(request):
 	venues = Venue.objects.all()
 	return render(request, 'events/venue_list.html', {'venues':venues})
+
 
 def add_venue(request):
 	submitted = False
@@ -70,6 +73,10 @@ def show_venue(request, venue_id):
 	return render(request, 'events/show_venue.html', {'venue':venue})
 
 
+def show_event(request, event_id):
+	event = Event.objects.get(pk=event_id)
+	return render(request, 'events/show_event.html',{'event':event})
+
 
 def search_any(request):
 	if request.method == "POST":
@@ -80,4 +87,13 @@ def search_any(request):
 			venues = Venue.objects.filter(name__icontains=searched)
 			events = Event.objects.filter(name__icontains=searched)
 			return render(request, 'events/search.html',{'searched':searched,'venues':venues,'events':events})
-	
+
+
+@login_required
+def update_venue(request, venue_id):
+	venue = Venue.objects.get(pk=venue_id)
+	form = VenueForm(request.POST or None, instance=venue)
+	if form.is_valid():
+		form.save()
+		return redirect('list-venue')
+	return render(request, 'events/update_venue.html',{'venue':venue,'form':form})

@@ -1,0 +1,31 @@
+{% extends 'events/base.html' %}
+
+    {% block content %}
+
+      <h1>Event List</h1>   
+      <div class="card bg-light mb-3">
+  <div class="card-header" style="color:#2196f3;"> <strong> <h4>{{event}}</h4> </strong> </div>
+  <div class="card-body">
+    <h5 class="card-title">Venue: {{event.venue}}</h5>
+    <ul>
+        <li>Date: {{event.event_date}}</li>
+        <li>Venue Website: {{event.venue.web}}</li>
+        <li>Venue Address: {{event.venue.address}}</li>
+        <li>Manager: {{event.manager}}</li>
+        <li>Description: {{event.description}}</li> 
+        <li>Attendees:<br/>
+        {% for userattend in event.attendees.all %}
+         > {{userattend}}<br> <!-- {{event.attendees.all}} -->
+        </li>
+      </ul>
+        <br>
+  </div>
+</div>
+      
+      
+      {% endfor %}
+      {% for x in object_list %}
+        {{x}}
+      {% endfor %}
+    {% endblock content %}
+    

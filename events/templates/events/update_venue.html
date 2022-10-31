@@ -1,22 +1,16 @@
 {% extends 'events/base.html' %}
 
     {% block content %}
-    <h1>Add Venue</h1><hr>  
+    <h1>Update Venue</h1><hr>
         <div id=""  style="background-color:bisque;" class="col-lg-6 offset-lg-3">
-          {% if submitted %}
-          Venue added successfully!
-        {% else %}
       <form action="" method="POST" style="padding:30px;">
         {% csrf_token %}
-          {% for form in venueform %}
         <div class='form-group'>
           {{form.label_tag}} {{form|capfirst}} 
         </div>
-        {% endfor %}
-          <input type="submit" value="Save" class="btn btn-primary"> <br>
+          <input type="submit" value="Update" class="btn btn-success btn-sm"> <span class="btn btn-danger btn-sm"> <a href="{% url 'list-venue' %}" style="color:white !important; text-decoration: none;">Cancel</a></span>
       </form>
-     {% endif %}
-        </div><br><br>
+        </div><br>
       
     {% endblock content %}  
     
