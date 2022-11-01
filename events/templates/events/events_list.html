@@ -5,12 +5,12 @@
       <h1>Event List</h1>   
       {% for event in events %}
       <div class="card bg-light mb-3">
-  <div class="card-header" style="color:#2196f3;"> <strong> <h4>{{event}}</h4> </strong> </div>
+  <div class="card-header" style="color:#2196f3;"> <strong> <h4>{{event}}</h4> </strong></div>
   <div class="card-body">
     <h5 class="card-title">Venue: {{event.venue}}</h5>
     <ul>
         <li>Date: {{event.event_date}}</li>
-        <li>Venue Website: {{event.venue.web}}</li>
+        <li>Venue Website: <a href="{{event.venue.web}}" target="_blank">{{event.venue.web}}</a> </li>
         <li>Venue Address: {{event.venue.address}}</li>
         <li>Manager: {{event.manager}}</li>
         <li>Description: {{event.description}}</li> 
@@ -22,6 +22,7 @@
       </ul>
         <br>
   </div>
+  <div class="card-footer" style="color:#2196f3;"> <a href="{% url 'update-event' event.id %}" class="btn btn-info" >Update Event</a> </div>
 </div>
       
       

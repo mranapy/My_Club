@@ -23,7 +23,7 @@ class EventForm(ModelForm):
 		model = Event
 		fields = ('name','event_date','venue','manager','description','attendees')
 		labels = {
-			'event_date' : 'Event Date - YYYY-MM-DD'
+			'event_date' : 'Event Date - YYYY-MM-DD HH:MM:SS'
 		}
 		widgets = {
 			'name': forms.TextInput(attrs={'class':'form-control'}),

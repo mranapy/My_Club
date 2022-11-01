@@ -12,6 +12,7 @@ urlpatterns = [
     path('show-venue/venuid?<venue_id>/', views.show_venue, name='show-venue'),
     path('show-event/eventid<int:event_id>/', views.show_event, name='show-event'),
     path('add-event/', views.addEvent, name='add-event'),
+    path('update-event/eventid-<event_id>/', views.update_event, name='update-event'),
     path('searchany/', views.search_any, name='searchany'),
     # path('venues/',views.VenueList.as_view(), name='list-venue'),
     
