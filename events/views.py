@@ -7,6 +7,7 @@ from .models import Event, Venue
 from .forms import VenueForm,EventForm
 from django.views.generic.list import ListView
 from django.http import HttpResponseRedirect,HttpResponse
+from django.db.models import Q # For icontains multiple search
 # Create your views here.
 def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
 	month = month.capitalize()
@@ -32,7 +33,7 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime('%B'))
  
 # ---------- SHOW ALL EVENT ----------
 def all_events(request):
-	events = Event.objects.all()
+	events = Event.objects.all().order_by('-event_date')
 	return render(request, 'events/events_list.html', {'events':events})
 
 # class VenueList(ListView):
@@ -74,14 +75,13 @@ def update_venue(request, venue_id):
 		return redirect('list-venue')
 	return render(request, 'events/update_venue.html',{'venue':venue,'form':form})
 
-def update_event(request, event_id):
-	event = Event.objects.get(pk=event_id)
-	form = EventForm(request.POST or None, instance=event)
-	if form.is_valid():
-		form.save()
-		return redirect('list-events')
-	return render(request, 'events/update_event.html',{'event':event,'form':form})
-# ---------- SHOW VENUE ----------
+# ---------- Delete VENUE ----------
+def deleteVenue(request, venue_id):
+	venue = Venue.objects.get(pk=venue_id)
+	venue.delete()
+	return redirect('list-venue')
+
+# ---------- Show VENUE ----------
 def show_venue(request, venue_id):
 	try:
 		venue = Venue.objects.get(pk=venue_id)
@@ -112,6 +112,22 @@ def show_event(request, event_id):
 	event = Event.objects.get(pk=event_id)
 	return render(request, 'events/show_event.html',{'event':event})
 
+# ---------- Update an Event ----------
+def update_event(request, event_id):
+	event = Event.objects.get(pk=event_id)
+	form = EventForm(request.POST or None, instance=event)
+	if form.is_valid():
+		form.save()
+		return redirect('list-events')
+	return render(request, 'events/update_event.html',{'event':event,'form':form})
+
+# ---------- Delete an EVENT ----------
+def deleteEvent(request, event_id):
+	event = Event.objects.get(pk=event_id)
+	event.delete()
+	return redirect('list-events')
+
+
 # ---------- SEARCH VENUE AND EVENT ----------
 def search_any(request):
 	if request.method == "POST":
@@ -119,10 +135,7 @@ def search_any(request):
 		if searched == "":
 			return HttpResponseRedirect('/')
 		else:
-			venues = Venue.objects.filter(name__icontains=searched)
+			venues = Venue.objects.filter(Q(name__icontains=searched) | Q(address__icontains=searched))
 			events = Event.objects.filter(name__icontains=searched)
 			return render(request, 'events/search.html',{'searched':searched,'venues':venues,'events':events})
-
-
-
 

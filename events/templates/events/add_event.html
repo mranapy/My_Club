@@ -10,7 +10,7 @@
         {% csrf_token %}
           {% for form in eventform %}
         <div class='form-group'>
-          {{form.label_tag}} {{form|capfirst}} 
+          {{form.label_tag}} {{form}} 
         </div>
         {% endfor %}
           <input type="submit" value="Save" class="btn btn-primary"> <br>

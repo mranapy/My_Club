@@ -33,8 +33,8 @@ class Event(models.Model):
 	manager = models.ForeignKey(User, blank=True,on_delete=models.CASCADE)
 	description = models.TextField(blank=True)
 	attendees = models.ManyToManyField(MyClubUser,blank=True)
-	class Meta:
-		ordering = ('event_date',)
+	# class Meta:
+	# 	ordering = ('event_date',)
 	def __str__(self):
 		return self.name
 
