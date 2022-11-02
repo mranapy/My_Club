@@ -2,7 +2,19 @@
 
     {% block content %}
 
-      <h1>Event List</h1>   
+          <div class="row">
+      <div class="col-8"><h1>Events List</h1></div>
+      <div class="col-4">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="{% url 'venue-text' %}">Text File</a><div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">PDF File</a><div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">CSV File</a>
+            </div>
+        </div>
+      </div>
+    </div>   
       {% for event in events %}
       <div class="card bg-light mb-3">
   <div class="card-header" style="color:#2196f3;"> <strong> <h4>{{event}}</h4> </strong></div>

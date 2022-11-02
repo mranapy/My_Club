@@ -10,7 +10,7 @@ class VenueForm(ModelForm):
 		fields = ('__all__')
 		widgets = {
 			'name': forms.TextInput(attrs={'class':'form-control'}),
-			'address': forms.TextInput(attrs={'class':'form-control'}),
+			'address': forms.Textarea(attrs={'class':'form-control'}),
 			'zip_code': forms.TextInput(attrs={'class':'form-control'}),
 			'phone': forms.TextInput(attrs={'class':'form-control'}),
 			'web': forms.TextInput(attrs={'class':'form-control'}),
@@ -30,7 +30,7 @@ class EventForm(ModelForm):
 			'event_date': forms.TextInput(attrs={'class':'form-control'}),
 			'venue': forms.Select(attrs={'class':'form-control'}),
 			'manager': forms.Select(attrs={'class':'form-control'}),
-			'description': forms.TextInput(attrs={'class':'form-control'}),
+			'description': forms.Textarea(attrs={'class':'form-control'}),
 			'attendees': forms.SelectMultiple(attrs={'class':'form-control'}),
 		}
 

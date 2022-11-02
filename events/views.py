@@ -6,8 +6,10 @@ from django.contrib.auth.decorators import login_required
 from .models import Event, Venue
 from .forms import VenueForm,EventForm
 from django.views.generic.list import ListView
-from django.http import HttpResponseRedirect,HttpResponse
+from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.db.models import Q # For icontains multiple search
+import csv
 # Create your views here.
 def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
 	month = month.capitalize()
@@ -138,4 +140,32 @@ def search_any(request):
 			venues = Venue.objects.filter(Q(name__icontains=searched) | Q(address__icontains=searched))
 			events = Event.objects.filter(name__icontains=searched)
 			return render(request, 'events/search.html',{'searched':searched,'venues':venues,'events':events})
+
+# Generate CSV File  for Venue
+def venueCSV(request):
+	results = HttpResponse(content_type="text/csv,charset=utf8")
+	results['Content-Disposition'] = 'attachment; filename=venues.csv'
+	# create csv file
+	writer = csv.writer(results)
+
+	# Deginate the Model
+	venues = Venue.objects.all()
+	# Add column heading csv file
+	writer.writerow(['Venue Name', 'Address', 'Zip Code','Phone no.','Email Address', 'Web Address'])
+	for venue in venues:
+		writer.writerow([venue.name,venue.address,venue.zip_code,venue.phone,venue.email,venue.web])
+	return results
+
+# Generate Text File for Venue
+def venueText(request):
+    file_name = 'Venues.txt'
+    lines = []
+    venues = Venue.objects.all()
+    for venue in venues:
+       lines.append('{0};\n{1};\n{2};\n{3};\n{4};\n{5};\n'.format(venue.name,venue.address,venue.zip_code,venue.phone,venue.web,venue.email )+'\n')
+    response_content = '\n'.join(lines)
+    response = HttpResponse(response_content, content_type="text/plain,charset=utf8")
+    response['Content-Disposition'] = 'attachment; filename={0}'.format(file_name)
+    return response
+
 

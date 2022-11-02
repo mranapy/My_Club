@@ -18,5 +18,9 @@ urlpatterns = [
     path('delete-event/eventid-<event_id>/', views.deleteEvent, name='delete-event'),
     path('searchany/', views.search_any, name='searchany'),
     # path('venues/',views.VenueList.as_view(), name='list-venue'),
+
+    # Download
+    path('venue_text/', views.venueText, name='venue-text'),
+    path('venue_csv/', views.venueCSV, name='venue-csv'),
     
 ]
