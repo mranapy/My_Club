@@ -22,5 +22,6 @@ urlpatterns = [
     # Download
     path('venue_text/', views.venueText, name='venue-text'),
     path('venue_csv/', views.venueCSV, name='venue-csv'),
+    path('venue_pdf/', views.venuePdf, name='venue-pdf'),
     
 ]

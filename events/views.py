@@ -6,8 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Event, Venue
 from .forms import VenueForm,EventForm
 from django.views.generic.list import ListView
-from django.http import HttpResponseRedirect
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect,HttpResponse,FileResponse
 from django.db.models import Q # For icontains multiple search
 import csv
 # Create your views here.
@@ -141,6 +140,31 @@ def search_any(request):
 			events = Event.objects.filter(name__icontains=searched)
 			return render(request, 'events/search.html',{'searched':searched,'venues':venues,'events':events})
 
+
+# def venueText(request):
+# 	lines = []
+# 	# Deginate the Model
+# 	venues = Venue.objects.all()
+# 	for venue in venues:
+# 		lines.append(f'{venue.name}\n{venue.address}\n{venue.zip_code}\n{venue.phone}\n{venue.email}\n{venue.web}\n\n')
+# 	results = writelines().join(lines)
+# 	results = HttpResponse(content_type="text/plain,charset=utf8")
+# 	results['Content-Disposition'] = 'attachment; filename=venues.txt'
+# 	return results
+
+# Generate Text File for Venue
+def venueText(request):
+    file_name = 'venues.txt'
+    lines = []
+    venues = Venue.objects.all()
+    for venue in venues:
+       lines.append('{0};\n{1};\n{2};\n{3};\n{4};\n{5};\n'.format(venue.name,venue.address,venue.zip_code,venue.phone,venue.web,venue.email )+'\n')
+    response_content = '\n'.join(lines)
+    response = HttpResponse(response_content, content_type="text/plain,charset=utf8")
+    response['Content-Disposition'] = 'attachment; filename={0}'.format(file_name)
+    return response
+
+
 # Generate CSV File  for Venue
 def venueCSV(request):
 	results = HttpResponse(content_type="text/csv,charset=utf8")
@@ -156,16 +180,45 @@ def venueCSV(request):
 		writer.writerow([venue.name,venue.address,venue.zip_code,venue.phone,venue.email,venue.web])
 	return results
 
-# Generate Text File for Venue
-def venueText(request):
-    file_name = 'Venues.txt'
-    lines = []
-    venues = Venue.objects.all()
-    for venue in venues:
-       lines.append('{0};\n{1};\n{2};\n{3};\n{4};\n{5};\n'.format(venue.name,venue.address,venue.zip_code,venue.phone,venue.web,venue.email )+'\n')
-    response_content = '\n'.join(lines)
-    response = HttpResponse(response_content, content_type="text/plain,charset=utf8")
-    response['Content-Disposition'] = 'attachment; filename={0}'.format(file_name)
-    return response
+# Generate a PDF File Venue List
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
 
+def venuePdf(request):
+	# Create Bytestream Buffer
+	buf = io.BytesIO()
+	# create a canvas
+	c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+	# create a text object
+	textob = c.beginText()
+	textob.setTextOrigin(inch,inch)
+	textob.setFont("Helvetica",14)
+
+	# Add some lines of text
+	# lines = ['line1','line2','line3']
+	# Design the venue model
+	venues = Venue.objects.all()
+	# create blank list
+	lines = []
+	for venue in venues:
+		# lines.append(venue.name,venue.address,venue.zip_code,venue.phone,venue.email,venue.web)
+		lines.append(venue.name)
+		lines.append(venue.address)
+		lines.append(venue.zip_code)
+		lines.append(venue.phone)
+		lines.append(venue.email)
+		lines.append(venue.web)
+		lines.append(" ")
+
+	for line in lines:
+		textob.textLine(line)
+	# Finish UP
+	c.drawText(textob)
+	c.showPage()
+	c.save()
+	buf.seek(0)
+
+	return FileResponse(buf, as_attachment=True, filename='venue.pdf')
 
