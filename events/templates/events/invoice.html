@@ -1,0 +1,66 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Venue List</title>
+    <link rel="stylesheet" href="style.css" media="all" />
+    <style>
+    	
+    </style>
+  </head>
+  <body>
+    <header class="clearfix">
+      <div id="logo">
+        <img src="logo.png">
+      </div>
+      <h1 style="text-align:center">INVOICE 3-2-1</h1>
+      <div id="company" class="clearfix" style="text-align:center">
+        <div>RootCoder</div>
+        <div>455 Foggy Heights,<br /> AZ 85004, BD</div>
+        <div>(602) 519-0450</div>
+        <div><a href="mailto:company@example.com">company@myclub.com</a></div> <hr>
+      </div>
+      <div id="project">
+        <div><span>PROJECT</span> Website development</div>
+        <div><span>CLIENT</span> John Doe</div>
+        <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>
+        <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div>
+        <div><span>DATE</span> August 17, 2015</div>
+        <div><span>DUE DATE</span> September 17, 2015</div> <br><br><br>
+      </div>
+    </header>
+    <main>
+      <table>
+        <thead style="text-align:center">
+          <tr>
+            <th class="service">Venue Name</th>
+            <th class="desc">Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Website</th>
+          </tr>
+        </thead>
+        <tbody style="text-align:center">
+        	{% for venue in venuespdf %}
+          <tr>
+            <td class="service">{{venue.name}}</td>
+            <td class="desc">{{venue.address}}</td>
+            <td class="unit">{{venue.phone}}</td>
+            <td class="qty">{{venue.email}}</td>
+            <td class="total">{{venue.web}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div id="notices">
+        <div>NOTICE:</div>
+        <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+      </div>
+    </main>
+    <footer>
+      Invoice was created on a computer and is valid without the signature and seal.
+    </footer>
+  </body>
+</html>

@@ -140,7 +140,7 @@ def search_any(request):
 			events = Event.objects.filter(name__icontains=searched)
 			return render(request, 'events/search.html',{'searched':searched,'venues':venues,'events':events})
 
-
+# Generate Text File for Venue
 # def venueText(request):
 # 	lines = []
 # 	# Deginate the Model
@@ -181,44 +181,67 @@ def venueCSV(request):
 	return results
 
 # Generate a PDF File Venue List
-import io
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib.pagesizes import letter
+# import io
+# from reportlab.pdfgen import canvas
+# from reportlab.lib.units import inch
+# from reportlab.lib.pagesizes import letter
 
+# def venuePdf(request):
+# 	# Create Bytestream Buffer
+# 	buf = io.BytesIO()
+# 	# create a canvas
+# 	c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+# 	# create a text object
+# 	textob = c.beginText()
+# 	textob.setTextOrigin(inch,inch)
+# 	textob.setFont("Helvetica",14)
+
+# 	# Add some lines of text
+# 	# lines = ['line1','line2','line3']
+# 	# Design the venue model
+# 	venues = Venue.objects.all()
+# 	# create blank list
+# 	lines = []
+# 	for venue in venues:
+# 		# lines.append(venue.name,venue.address,venue.zip_code,venue.phone,venue.email,venue.web)
+# 		lines.append(venue.name)
+# 		lines.append(venue.address)
+# 		lines.append(venue.zip_code)
+# 		lines.append(venue.phone)
+# 		lines.append(venue.email)
+# 		lines.append(venue.web)
+# 		lines.append(" ")
+
+# 	for line in lines:
+# 		textob.textLine(line)
+# 	# Finish UP
+# 	c.drawText(textob)
+# 	c.showPage()
+# 	c.save()
+# 	buf.seek(0)
+
+# 	return FileResponse(buf, as_attachment=True, filename='venue.pdf')
+
+ # Generate a PDF File Venue List (another way)
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 def venuePdf(request):
-	# Create Bytestream Buffer
-	buf = io.BytesIO()
-	# create a canvas
-	c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
-	# create a text object
-	textob = c.beginText()
-	textob.setTextOrigin(inch,inch)
-	textob.setFont("Helvetica",14)
+    template_path = 'events/invoice.html'
+    # context = {'myvar': 'this is your template context'}
+    venuespdf = Venue.objects.all()
+    context = {'venuespdf':venuespdf}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = ' filename="venues-list.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
 
-	# Add some lines of text
-	# lines = ['line1','line2','line3']
-	# Design the venue model
-	venues = Venue.objects.all()
-	# create blank list
-	lines = []
-	for venue in venues:
-		# lines.append(venue.name,venue.address,venue.zip_code,venue.phone,venue.email,venue.web)
-		lines.append(venue.name)
-		lines.append(venue.address)
-		lines.append(venue.zip_code)
-		lines.append(venue.phone)
-		lines.append(venue.email)
-		lines.append(venue.web)
-		lines.append(" ")
-
-	for line in lines:
-		textob.textLine(line)
-	# Finish UP
-	c.drawText(textob)
-	c.showPage()
-	c.save()
-	buf.seek(0)
-
-	return FileResponse(buf, as_attachment=True, filename='venue.pdf')
-
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
