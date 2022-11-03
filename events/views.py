@@ -45,7 +45,8 @@ def all_events(request):
 
 # ---------- SHOW ALL VENUE ----------
 def all_venues(request):
-	venues = Venue.objects.all()
+	venues = Venue.objects.all().order_by('name')
+
 	return render(request, 'events/venue_list.html', {'venues':venues})
 
 # ---------- ADD VENUE ----------

@@ -10,8 +10,8 @@ class Venue(models.Model):
 	web = models.URLField('Website address', blank=True)
 	email = models.EmailField('Email address',blank=True)
 
-	class Meta:
-		ordering = ('name',)
+	# class Meta:
+	# 	ordering = ('name',)
 	def __str__(self):
 		return self.name
 
