@@ -7,8 +7,13 @@ from .models import Event, Venue
 from .forms import VenueForm,EventForm
 from django.views.generic.list import ListView
 from django.http import HttpResponseRedirect,HttpResponse,FileResponse
+# Import For Multiple search
 from django.db.models import Q # For icontains multiple search
+# Import for CSV
 import csv
+# Import paginator stuff
+from django.core.paginator import Paginator
+
 # Create your views here.
 def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
 	month = month.capitalize()
@@ -45,8 +50,14 @@ def all_events(request):
 
 # ---------- SHOW ALL VENUE ----------
 def all_venues(request):
-	venues = Venue.objects.all().order_by('name')
+	# venues = Venue.objects.all().order_by('?')
+	# venue_list = Venue.objects.all()
 
+	# Setup pagination
+	p = Paginator(Venue.objects.all().order_by('name'),2)
+	page = request.GET.get('page')
+	venues = p.get_page(page)
+	# context = {'venue_list':venue_list}
 	return render(request, 'events/venue_list.html', {'venues':venues})
 
 # ---------- ADD VENUE ----------
@@ -246,3 +257,4 @@ def venuePdf(request):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
