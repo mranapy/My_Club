@@ -57,8 +57,9 @@ def all_venues(request):
 	p = Paginator(Venue.objects.all().order_by('name'),2)
 	page = request.GET.get('page')
 	venues = p.get_page(page)
+	nums = "a" * venues.paginator.num_pages
 	# context = {'venue_list':venue_list}
-	return render(request, 'events/venue_list.html', {'venues':venues})
+	return render(request, 'events/venue_list.html', {'venues':venues,'nums':nums})
 
 # ---------- ADD VENUE ----------
 def add_venue(request):
@@ -239,7 +240,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 def venuePdf(request):
-    template_path = 'events/invoice.html'
+    template_path = 'events/venuepdf.html'
     # context = {'myvar': 'this is your template context'}
     venuespdf = Venue.objects.all()
     context = {'venuespdf':venuespdf}
