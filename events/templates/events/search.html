@@ -17,7 +17,7 @@
             <tbody>
               <tr>
               <td>
-                <a style="color:white !important; text-decoration: none;" href="{% url 'show-venue' venue.id %}">{{venue}}</a>
+                <a style="color:white !important; text-decoration: none;" href="{% url 'show-venue' venue.id %}">{{venue | title}}</a>
               </td>
               </tr>
         </tbody>
@@ -36,7 +36,7 @@
             <tbody>
               <tr>
               <td>
-                <a style="color:white !important; text-decoration: none;" href="{% url 'show-event' event.id %}">{{event}}</a>
+                <a style="color:white !important; text-decoration: none;" href="{% url 'show-event' event.id %}">{{event | title}}</a>
               </td>
               </tr>
         </tbody>

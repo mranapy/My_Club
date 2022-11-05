@@ -9,6 +9,9 @@ class Venue(models.Model):
 	phone = models.CharField('Contact phone',max_length=15,blank=True)
 	web = models.URLField('Website address', blank=True)
 	email = models.EmailField('Email address',blank=True)
+	def clean(self):
+		self.name = self.name.capitalize()
+	
 
 	# class Meta:
 	# 	ordering = ('name',)
@@ -35,6 +38,9 @@ class Event(models.Model):
 	attendees = models.ManyToManyField(MyClubUser,blank=True)
 	# class Meta:
 	# 	ordering = ('event_date',)
+	def clean(self):
+		# self.name = self.name.capitalize()
+		self.description = self.description.capitalize()
 	def __str__(self):
 		return self.name
 

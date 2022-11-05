@@ -6,11 +6,16 @@
       {% if submitted %}
           Event added successfully!
         {% else %}
-      <form action="" method="POST" style="padding:30px;">
+      <form action="" method="POST" style="padding:30px;" novalidate>
         {% csrf_token %}
+        {% if form.non_field_errors %}
+          {% for error in form.non_field_errors %}
+            <p class='alert alert-danger my-2'>{{error}}</p>
+          {% endfor %}
+        {% endif %}
           {% for form in eventform %}
         <div class='form-group'>
-          {{form.label_tag}} {{form}} 
+          {{form.label_tag}} {{form}} <p class='text-danger'>{{form.errors|striptags}}</p>
         </div>
         {% endfor %}
           <input type="submit" value="Save" class="btn btn-primary"> <br>

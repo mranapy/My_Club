@@ -1,0 +1,25 @@
+{% extends 'events/base.html' %}
+
+    {% block content %}
+    <h1>Login member</h1><hr> 
+        <div id=""  style="background-color:bisque;" class="col-lg-6 offset-lg-3">
+
+      <form action="" method="POST" style="padding:30px;" novalidate>
+        {% csrf_token %}
+          
+        <div class="form-group">
+          <label for="exampleInputEmail1">Username</label>
+            <input type="email" class="form-control" name="username" aria-describedby="emailHelp" placeholder="Enter username">
+            </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Enter password">
+        </div>
+        
+          <input type="submit" value="Save" class="btn btn-primary"> <br>
+      </form>
+    
+        </div><br><br>
+      
+    {% endblock content %}  
+    

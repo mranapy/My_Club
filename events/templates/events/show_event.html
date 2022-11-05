@@ -3,9 +3,9 @@
     {% block content %}
       <h1>Event List</h1>
       <div class="card bg-light mb-3">
-        <div class="card-header" style="color:#2196f3;"> <strong> <h4>{{event}}</h4> </strong> </div>
+        <div class="card-header" style="color:#2196f3;"> <strong> <h4>{{event | title}}</h4> </strong> </div>
           <div class="card-body">
-            <h5 class="card-title">Venue: {{event.venue}}</h5>
+            <h5 class="card-title">Venue: {{event.venue | title}}</h5>
             <ul>
               <li>Date: {{event.event_date}}</li>
               <li>Venue Website: <a href="{{event.venue.web}}" target="_blank">{{event.venue.web}}</a></li>

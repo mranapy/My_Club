@@ -19,7 +19,7 @@ urlpatterns = [
     path('searchany/', views.search_any, name='searchany'),
     # path('venues/',views.VenueList.as_view(), name='list-venue'),
 
-    # Download
+    # Generate txt, csv & pdf File
     path('venue_text/', views.venueText, name='venue-text'),
     path('venue_csv/', views.venueCSV, name='venue-csv'),
     path('venue_pdf/', views.venuePdf, name='venue-pdf'),
