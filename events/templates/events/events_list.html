@@ -39,7 +39,9 @@
     {% if user == event.manager %}
       <div class="card-footer" style="color:#2196f3;">
         <a href="{% url 'update-event' event.id %}" class="btn btn-info" >Update Event</a>
+        {% if perms.event.delete_post %}
         <a href="{% url 'delete-event' event.id %}" class="btn btn-danger" >Delete Event</a>
+        {% endif %}
       </div>
     {% endif %}
   {% endif %}
