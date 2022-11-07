@@ -62,6 +62,8 @@ def all_venues(request):
 	return render(request, 'events/venue_list.html', {'venues':venues,'nums':nums})
 
 # ---------- ADD VENUE ----------
+
+# @login_required
 def add_venue(request):
 	submitted = False
 	if request.method == "POST":

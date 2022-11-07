@@ -1,0 +1,47 @@
+Titu Milanayton;
+Pouro-park Bogura;
+5800;
+01675214543;
+http://www.titumilanayton.com;
+contact@titumilanayton.com;
+
+
+Porjaton motel;
+102 Banani;
+5800;
+01675214387;
+http://www.porjatonmotel.com;
+contact@porjatonmotel.com;
+
+
+minal city hall;
+53 Minal City;
+1325;
+111 222 333;
+http://www.milancity.com;
+contact@milancity.com;
+
+
+Test;
+This is test venue;
+1122;
+11223234324;
+http://www.conertionhall.com;
+contact@conertionhall.com;
+
+
+City park;
+12 City Park;
+332245;
+11223234324;
+http://www.citypark.com;
+contact@citypark.com;
+
+
+Test2;
+axios await;
+;
+;
+;
+;
+

@@ -9,27 +9,41 @@
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'list-events' %}">Events</a>
       </li>
+      {% if request.user.is_authenticated %}
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'add-event' %}">Add Event</a>
       </li>
+      {% endif %}
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'list-venue' %}">Venues</a>
       </li>
+      {% if request.user.is_authenticated %}
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'add-venue' %}">Add Venue</a>
       </li>
-      
+      {% endif %}
+      {% if request.user.is_authenticated %}
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Admin
+          @{{user}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'login' %}">Login</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'home' '2021' 'March' %}">March</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+          <!-- <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'signup' %}">Sign Up</a> -->
         </div>
       </li>
+      {% else %}
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'login' %}">Login</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'signup' %}">Registration</a>
+      </li>
+      {% endif %}
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Download

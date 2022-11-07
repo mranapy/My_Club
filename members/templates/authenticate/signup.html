@@ -1,0 +1,18 @@
+{% extends 'events/base.html' %}
+
+    {% block content %}
+    <h1>Sign up member</h1><hr> 
+        <div id=""  style="background-color:bisque;" class="col-lg-6 offset-lg-3">
+
+      <form action="" method="POST" style="padding:30px;" novalidate>
+        {% csrf_token %}
+          
+        {{ form.as_p }}
+        
+          <input type="submit" value="Sign up" class="btn btn-info"> <span>Do you already have an account?<a href="{% url 'login' %}"> Login</a> </span> <br>
+      </form>
+    
+        </div><br><br>
+      
+    {% endblock content %}  
+    

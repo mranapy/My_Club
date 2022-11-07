@@ -2,7 +2,6 @@ from django import forms
 from django.forms import ModelForm
 from .models import Venue, Event
 
-
 # Venue Form
 class VenueForm(ModelForm):
 	class Meta:

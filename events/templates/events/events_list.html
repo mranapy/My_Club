@@ -1,7 +1,7 @@
 {% extends 'events/base.html' %}
 
     {% block content %}
-
+      {% if request.user.is_authenticated %}
           <div class="row">
       <div class="col-8"><h1>Events List</h1></div>
       <div class="col-4">
@@ -14,7 +14,8 @@
             </div>
         </div>
       </div>
-    </div>   
+    </div>
+      {% endif %}
       {% for event in events %}
       <div class="card bg-light mb-3">
   <div class="card-header" style="color:#2196f3;"> <strong> <h4>{{event | title}}</h4> </strong></div>
@@ -34,10 +35,14 @@
       </ul>
         <br>
   </div>
-  <div class="card-footer" style="color:#2196f3;">
-    <a href="{% url 'update-event' event.id %}" class="btn btn-info" >Update Event</a>
-    <a href="{% url 'delete-event' event.id %}" class="btn btn-danger" >Delete Event</a>
-   </div>
+  {% if request.user.is_authenticated %}
+    {% if user == event.manager %}
+      <div class="card-footer" style="color:#2196f3;">
+        <a href="{% url 'update-event' event.id %}" class="btn btn-info" >Update Event</a>
+        <a href="{% url 'delete-event' event.id %}" class="btn btn-danger" >Delete Event</a>
+      </div>
+    {% endif %}
+  {% endif %}
 </div>
       
       
