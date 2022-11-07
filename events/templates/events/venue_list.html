@@ -28,17 +28,23 @@
               <div class="col-8">
                 {{forloop.count}}
                 <a class="float-left" style="color:white !important; text-decoration: none;" href="{% url 'show-venue' venue.id %}">{{venue.name | title }}</a>
+                <span>
+                <!--   {% if user.id == venue.owner %}
+                      User: @{{user.first_name}}
+                  {% endif %} -->
+                </span> 
               </div>
             <!-- <a style="text-decoration: none;" href="{% url 'delete-venue' venue.id %}" class="btn btn-danger btn-sm float-right">Delete Venue</a> -->
             {% if request.user.is_authenticated %}
             <div class="col-2">
-              <a style="text-decoration: none;color: black;" class="btn btn-warning btn-sm float-right" href="{% url 'update-venue' venue.id %}">Update</a>
+              <a style="text-decoration: none;color: black;" class="btn btn-warning btn-sm float-right" href="{% url 'update-venue' venue.id %}">Update</a> 
             </div>
-            <!-- {% if perms.venue.delete_post %} -->
+            
+            {% if user.id == venue.owner %}
             <div class="col-2">
               <a type="button" href="{% url 'delete-venue' venue.id %}" style="color:white;" class="btn btn-danger btn-sm float-right">Delete</a>
             </div>
-            <!-- {% endif %} -->
+            {% endif %}
             {% endif %}
             </div>
             

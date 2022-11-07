@@ -65,39 +65,43 @@ def all_venues(request):
 
 # @login_required
 def add_venue(request):
-	submitted = False
-	if request.method == "POST":
-		venueform = VenueForm(request.POST)
-		if venueform.is_valid():
-			venue = venueform.save(commit=False)
-			venue.owner = request.user.id  # Logged in user
-			venue.save()
-			submitted = True
-			return HttpResponseRedirect('/add-venue?submitted=True')
+	if request.user.is_authenticated:
+		submitted = False
+		if request.method == "POST":
+			venueform = VenueForm(request.POST)
+			if venueform.is_valid():
+				venue = venueform.save(commit=False)
+				venue.owner = request.user.id  # Logged in user
+				venue.save()
+				submitted = True
+				return HttpResponseRedirect('/add-venue?submitted=True')
+		else:
+			venueform = VenueForm()
+			if 'submitted' in request.GET:
+				submitted = True
+		return render(request, 'events/add_venue.html',{'venueform':venueform,'submitted':submitted})
 	else:
-		venueform = VenueForm()
-		if 'submitted' in request.GET:
-			submitted = True
-	return render(request, 'events/add_venue.html',{
-				'venueform':venueform,
-				'submitted':submitted
-			})
-
+		return redirect('login')
 # ---------- UPDATE VENUE ----------
 
 def update_venue(request, venue_id):
-	venue = Venue.objects.get(pk=venue_id)
-	form = VenueForm(request.POST or None, instance=venue)
-	if form.is_valid():
-		form.save()
-		return redirect('list-venue')
-	return render(request, 'events/update_venue.html',{'venue':venue,'form':form})
+	if request.user.is_authenticated:
+		venue = Venue.objects.get(pk=venue_id)
+		form = VenueForm(request.POST or None, instance=venue)
+		if form.is_valid():
+			form.save()
+			return redirect('list-venue')
+		return render(request, 'events/update_venue.html',{'venue':venue,'form':form})
+	else:
+		return redirect('login')
 
 # ---------- Delete VENUE ----------
 def deleteVenue(request, venue_id):
-	venue = Venue.objects.get(pk=venue_id)
-	venue.delete()
-	return redirect('list-venue')
+	if request.user.is_authenticated:
+		venue = Venue.objects.get(pk=venue_id)
+		venue.delete()
+		return redirect('list-venue')
+	return redirect('login')
 
 # ---------- Show VENUE ----------
 def show_venue(request, venue_id):
@@ -110,19 +114,22 @@ def show_venue(request, venue_id):
 
 # ---------- ADD EVENT ----------
 def addEvent(request):
-	submitted = False
-	if request.method == "POST":
-		eventform = EventForm(request.POST)
-		if eventform.is_valid():
-			eventform.save()
-			submitted = True
-			# return redirect('list-events')
-			return HttpResponseRedirect('/add-event?submitted=True')
+	if request.user.is_authenticated:
+		submitted = False
+		if request.method == "POST":
+			eventform = EventForm(request.POST)
+			if eventform.is_valid():
+				eventform.save()
+				submitted = True
+				# return redirect('list-events')
+				return HttpResponseRedirect('/add-event?submitted=True')
+		else:
+			eventform = EventForm()
+			if 'submitted' in request.GET:
+				submitted = True
+		return render(request, 'events/add_event.html',{'eventform':eventform,'submitted':submitted})
 	else:
-		eventform = EventForm()
-		if 'submitted' in request.GET:
-			submitted = True
-	return render(request, 'events/add_event.html',{'eventform':eventform,'submitted':submitted})
+		return redirect('login')
 
 
 # ---------- SHOW EVENT ----------
@@ -132,18 +139,24 @@ def show_event(request, event_id):
 
 # ---------- Update an Event ----------
 def update_event(request, event_id):
-	event = Event.objects.get(pk=event_id)
-	form = EventForm(request.POST or None, instance=event)
-	if form.is_valid():
-		form.save()
-		return redirect('list-events')
-	return render(request, 'events/update_event.html',{'event':event,'form':form})
+	if request.user.is_authenticated:
+		event = Event.objects.get(pk=event_id)
+		form = EventForm(request.POST or None, instance=event)
+		if form.is_valid():
+			form.save()
+			return redirect('list-events')
+		return render(request, 'events/update_event.html',{'event':event,'form':form})
+	else:
+		return redirect('login')
 
 # ---------- Delete an EVENT ----------
 def deleteEvent(request, event_id):
-	event = Event.objects.get(pk=event_id)
-	event.delete()
-	return redirect('list-events')
+	if request.user.is_authenticated:
+		event = Event.objects.get(pk=event_id)
+		event.delete()
+		return redirect('list-events')
+	else:
+		return redirect('login')
 
 
 # ---------- SEARCH VENUE AND EVENT ----------
@@ -171,15 +184,18 @@ def search_any(request):
 
 # Generate Text File for Venue
 def venueText(request):
-    file_name = 'venues.txt'
-    lines = []
-    venues = Venue.objects.all()
-    for venue in venues:
-       lines.append('{0};\n{1};\n{2};\n{3};\n{4};\n{5};\n'.format(venue.name,venue.address,venue.zip_code,venue.phone,venue.web,venue.email )+'\n')
-    response_content = '\n'.join(lines)
-    response = HttpResponse(response_content, content_type="text/plain,charset=utf8")
-    response['Content-Disposition'] = 'attachment; filename={0}'.format(file_name)
-    return response
+	if request.user.is_authenticated:
+		file_name = 'venues.txt'
+		lines = []
+		venues = Venue.objects.all()
+		for venue in venues:
+			lines.append('{0};\n{1};\n{2};\n{3};\n{4};\n{5};\n'.format(venue.name,venue.address,venue.zip_code,venue.phone,venue.web,venue.email )+'\n')
+			response_content = '\n'.join(lines)
+		response = HttpResponse(response_content, content_type="text/plain,charset=utf8")
+		response['Content-Disposition'] = 'attachment; filename={0}'.format(file_name)
+		return response
+	else:
+		return redirect('login')
 
 
 # Generate CSV File  for Venue
@@ -244,22 +260,24 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 def venuePdf(request):
-    template_path = 'events/venuepdf.html'
-    # context = {'myvar': 'this is your template context'}
-    venuespdf = Venue.objects.all()
-    context = {'venuespdf':venuespdf}
-    # Create a Django response object, and specify content_type as pdf
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = ' filename="venues-list.pdf"'
-    # find the template and render it.
-    template = get_template(template_path)
-    html = template.render(context)
+	if request.user.is_authenticated:
+		template_path = 'events/venuepdf.html'
+		# context = {'myvar': 'this is your template context'}
+		venuespdf = Venue.objects.all()
+		context = {'venuespdf':venuespdf}
+		# Create a Django response object, and specify content_type as pdf
+		response = HttpResponse(content_type='application/pdf')
+		response['Content-Disposition'] = ' filename="venues-list.pdf"'
+		# find the template and render it.
+		template = get_template(template_path)
+		html = template.render(context)
 
-    # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response)
-    # if error then show some funny view
-    if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
+		# create a pdf
+		pisa_status = pisa.CreatePDF(html, dest=response)
+		# if error then show some funny view
+		if pisa_status.err:
+			return HttpResponse('We had some errors <pre>' + html + '</pre>')
+		return response
+	else:
+		return redirect('login')
 

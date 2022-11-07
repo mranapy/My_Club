@@ -25,10 +25,10 @@
       {% if request.user.is_authenticated %}
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          @{{user}}
+          @{{user.first_name}} {{user.last_name}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'home' '2021' 'March' %}">March</a>
+          <a class="dropdown-item" href="{% url 'home' '2022' 'December' %}">December</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
           <!-- <a class="dropdown-item" href="{% url 'login' %}">Login</a>
@@ -58,7 +58,7 @@
     <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'searchany' %}">
       {% csrf_token %}
       <input class="form-control mr-sm-2" type="search" name="searched" placeholder="Event or Venue" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">
     </form>
   </div>
 </nav>
