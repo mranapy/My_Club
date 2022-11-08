@@ -41,8 +41,15 @@
         <a href="{% url 'update-event' event.id %}" class="btn btn-info" >Update Event</a>
         <!-- {% if perms.event.delete_post %} --><!-- {% endif %} -->
         <a href="{% url 'delete-event' event.id %}" class="btn btn-danger" >Delete Event</a>
-        
       </div>
+      {% elif user.is_superuser %}
+      <div class="card-footer" style="color:#2196f3;">
+        <a href="{% url 'update-event' event.id %}" class="btn btn-info" >Update Event</a>
+        <!-- {% if perms.event.delete_post %} --><!-- {% endif %} -->
+        <a href="{% url 'delete-event' event.id %}" class="btn btn-danger" >Delete Event</a>
+      </div>
+      {% else %}
+      <P></P>
     {% endif %}
   {% endif %}
 </div>

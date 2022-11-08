@@ -4,7 +4,7 @@ from calendar import HTMLCalendar
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from .models import Event, Venue
-from .forms import VenueForm,EventForm
+from .forms import VenueForm,EventForm, EventFormAdmin
 from django.views.generic.list import ListView
 from django.http import HttpResponseRedirect,HttpResponse,FileResponse
 # Import For Multiple search
@@ -117,14 +117,26 @@ def addEvent(request):
 	if request.user.is_authenticated:
 		submitted = False
 		if request.method == "POST":
-			eventform = EventForm(request.POST)
-			if eventform.is_valid():
-				eventform.save()
-				submitted = True
-				# return redirect('list-events')
-				return HttpResponseRedirect('/add-event?submitted=True')
+			if request.user.is_superuser:
+				eventform = EventFormAdmin(request.POST)
+				if eventform.is_valid():
+					eventform.save()
+					submitted = True
+					# return redirect('list-events')
+					return HttpResponseRedirect('/add-event?submitted=True')
+			else:
+				eventform = EventForm(request.POST)
+				if eventform.is_valid():
+					event = eventform.save(commit=False)
+					event.manager = request.user  # Logged in user
+					event.save()
+					submitted = True
+					return HttpResponseRedirect('/add-event?submitted=True')
 		else:
-			eventform = EventForm()
+			if request.user.is_superuser:
+				eventform = EventFormAdmin()
+			else:
+				eventform = EventForm()
 			if 'submitted' in request.GET:
 				submitted = True
 		return render(request, 'events/add_event.html',{'eventform':eventform,'submitted':submitted})
@@ -141,7 +153,10 @@ def show_event(request, event_id):
 def update_event(request, event_id):
 	if request.user.is_authenticated:
 		event = Event.objects.get(pk=event_id)
-		form = EventForm(request.POST or None, instance=event)
+		if request.user.is_superuser:
+			form = EventFormAdmin(request.POST or None, instance=event)
+		else:
+			form = EventForm(request.POST or None, instance=event)
 		if form.is_valid():
 			form.save()
 			return redirect('list-events')

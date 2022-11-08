@@ -26,7 +26,7 @@ class VenueForm(ModelForm):
   #           }
 
 
-class EventForm(ModelForm):
+class EventFormAdmin(ModelForm):
 	class Meta:
 		model = Event
 		fields = ('name','event_date','venue','manager','description','attendees')
@@ -42,4 +42,18 @@ class EventForm(ModelForm):
 			'attendees': forms.SelectMultiple(attrs={'class':'form-control'}),
 		}
 
-		
+# This Form For Manager
+class EventForm(ModelForm):
+	class Meta:
+		model = Event
+		fields = ('name','event_date','venue','description','attendees')
+		labels = {
+			'event_date' : 'Event Date - YYYY-MM-DD HH:MM:SS'
+		}
+		widgets = {
+			'name': forms.TextInput(attrs={'class':'form-control'}),
+			'event_date': forms.TextInput(attrs={'class':'form-control'}),
+			'venue': forms.Select(attrs={'class':'form-control'}),
+			'description': forms.Textarea(attrs={'class':'form-control','rows':'4'}),
+			'attendees': forms.SelectMultiple(attrs={'class':'form-control'}),
+		}
