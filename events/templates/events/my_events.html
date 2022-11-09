@@ -13,11 +13,11 @@
                 <li>Date: {{event.event_date}}</li>
                 <li>Venue Website: <a href="{{event.venue.web}}" target="_blank">{{event.venue.web}}</a> </li>
                 <li>Venue Address: {{event.venue.address}}</li>
-                <li>Manager: {{event.manager}}</li>
+                <!-- <li>Manager: {{event.manager}}</li> -->
                 <li>Description: {{event.description}}</li> 
                 <li>Attendees:<br/>
                   {% for userattend in event.attendees.all %}
-                    > {{userattend}}<br> <!-- {{event.attendees.all}} -->
+                    <span> > </span> {{userattend}}<br> <!-- {{event.attendees.all}} -->
                   {% endfor %}
                 </li>
               </ul>
