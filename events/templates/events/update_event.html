@@ -9,7 +9,7 @@
         <div class='form-group'>
           {{form.label_tag}} {{form|capfirst}} 
         </div>
-          <input type="submit" value="Update" class="btn btn-success btn-sm"> <span class="btn btn-danger btn-sm"> <a href="{% url 'list-events' %}" style="color:white !important; text-decoration: none;">Cancel</a></span><br>
+          <input type="submit" value="Update" class="btn btn-success btn-sm"> <span class="btn btn-danger btn-sm"> <a href="{% url 'my-events' %}" style="color:white !important; text-decoration: none;">Cancel</a></span><br>
       </form>
       {% elif user.is_superuser %}
       <h1>Update Event</h1><hr>  

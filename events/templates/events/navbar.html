@@ -30,6 +30,8 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item disabled">{{user.first_name}} {{user.last_name}}</a>
           <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'my-events' %}">My Events</a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'home' '2022' 'December' %}">December</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>

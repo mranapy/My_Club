@@ -18,6 +18,7 @@ class VenueForm(ModelForm):
 			'phone': forms.TextInput(attrs={'class':'form-control'}),
 			'web': forms.TextInput(attrs={'class':'form-control'}),
 			'email': forms.TextInput(attrs={'class':'form-control'}),
+			# 'book': forms.BooleanField(),
 		}
 		# def __init__(self, *args, **kwargs):
 		# 	super(VenueForm, self).__init__(*args, **kwargs)

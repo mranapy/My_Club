@@ -5,7 +5,11 @@
       <h1>Venue Details</h1> 
           <div class="card bg-light mb-3">
             <div class="card-header"><b>Venue name: {{venue.name | title}}</b>
-              <button class="btn btn-primary float-right">Reserve</button>
+              {% if venue.book == 1 %}
+              <p class="float-right disabled" style="color:white;padding: 7px;background-color: #dc3545; border-radius: 5px;">Already Reserve</p>
+              {% else %}
+              <a class="btn btn-primary float-right" href="{% url 'reserve' venue.id %}" >Reserve Now</a>
+              {% endif %}
             </div>
               <div class="card-body">
                 <ul>

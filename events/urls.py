@@ -12,11 +12,13 @@ urlpatterns = [
     path('delete-venue/venuid-<venue_id>/', views.deleteVenue, name='delete-venue'),
     path('show-venue/venuid?<venue_id>/', views.show_venue, name='show-venue'),
 
+
     path('show-event/eventid<int:event_id>/', views.show_event, name='show-event'),
     path('add-event/', views.addEvent, name='add-event'),
     path('update-event/eventid-<event_id>/', views.update_event, name='update-event'),
     path('delete-event/eventid-<event_id>/', views.deleteEvent, name='delete-event'),
     path('searchany/', views.search_any, name='searchany'),
+    path('my-events/', views.myEvents, name='my-events'),
     # path('venues/',views.VenueList.as_view(), name='list-venue'),
 
     # Generate txt, csv & pdf File

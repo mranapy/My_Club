@@ -10,6 +10,7 @@ class Venue(models.Model):
 	web = models.URLField('Website address', blank=True)
 	email = models.EmailField('Email address',blank=True)
 	owner = models.PositiveIntegerField(verbose_name='Venue Owner', blank=False, default=1)
+	book = models.BooleanField(default=False, blank=True)
 	
 	def clean(self):
 		self.name = self.name.capitalize()
@@ -40,6 +41,7 @@ class Event(models.Model):
 	attendees = models.ManyToManyField(MyClubUser,blank=True)
 	# class Meta:
 	# 	ordering = ('event_date',)
+
 	def clean(self):
 		# self.name = self.name.capitalize()
 		self.description = self.description.capitalize()

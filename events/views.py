@@ -296,3 +296,11 @@ def venuePdf(request):
 	else:
 		return redirect('login')
 
+def myEvents(request):
+	if request.user.is_authenticated:
+		# me = request.user
+		events = Event.objects.all()
+		return render(request, 'events/my_events.html',{'events':events})
+	else:
+		messages.success(request,'You have no Events..')
+		return HttpResponseRedirect('list-events')
