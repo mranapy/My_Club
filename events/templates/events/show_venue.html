@@ -13,10 +13,22 @@
             </div>
               <div class="card-body">
                 <ul>
+                  {% if venue.address %}
                   <li>Address: {{venue.address}}</li>
+                  {% endif %}
+                  {% if venue.phone %}
                   <li>Phone: {{venue.phone}}</li>
+                  {% endif %}
+                  {% if venue.email %}
                   <li>Email: {{venue.email}}</li>
+                  {% endif %}
+                  {% if venue.web %}
                   <li>Website: <a href="{{venue.web}}" target="_blank">{{venue.web}}</a></li>
+                  {% endif %}
+                  {% if venue.owner %}
+                  <li>Owner ID: {{venue.owner}}</li>
+                  <li>Owner name: {{user.id}}</li>
+                  {% endif %}
                 </ul>
               </div>
               <div class="text-center">

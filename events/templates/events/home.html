@@ -7,14 +7,21 @@
   <div class="card-body">
     <h5 class="card-title"><p>{{month}}, {{year}}</p></h5>
     <p class="card-text"><h3>Month no: {{month_number}}</h3>
-      Time: {{time}}
+      <!-- Time: {{time}} -->
       {{cal|safe}}</p>
       <!-- {{now}}  -->
-      <br><br>
+      <h3>Up coming Events</h3><hr>
+      {% if event_list %}
+        {% for event in event_list %}
+          <b>{{event}} - <span class="text-danger">{{event.event_date}}</span></b> <br>
+        {% endfor %}
+      {% else %}
+      Sorry... There isno events in this month...
+      {% endif %}
   </div>
-</div>
-<h6 class="card-footer">Copyrights(c) - {{current_year}}</h6>
 
+<h6 class="card-header">Copyrights(c) - {{current_year}}</h6>
+</div>
       </center>
     {% endblock content %}
     
