@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Venue Model
 class Venue(models.Model):
-	name = models.CharField('Venue name', max_length=120)
+	name = models.CharField(verbose_name='Venue name', max_length=120)
 	address = models.CharField(max_length=300)
 	zip_code = models.CharField('Zip Code',max_length=10,blank=True)
 	phone = models.CharField('Contact phone',max_length=15,blank=True)
@@ -34,11 +34,11 @@ class MyClubUser(models.Model):
 class Event(models.Model):
 	name = models.CharField('Event name', max_length=120)
 	event_date = models.DateTimeField('Event date')
-	venue = models.ForeignKey(Venue, null=True, on_delete=models.CASCADE)
+	venue = models.ForeignKey(Venue, null=True, on_delete=models.CASCADE) # Many to One Relation
 	# venue = models.CharField(max_length=60)
-	manager = models.ForeignKey(User, blank=True,on_delete=models.CASCADE)
+	manager = models.ForeignKey(User, blank=True,on_delete=models.CASCADE) # Many to one Relation
 	description = models.TextField(blank=True)
-	attendees = models.ManyToManyField(MyClubUser,blank=True)
+	attendees = models.ManyToManyField(MyClubUser,blank=True) # Many to Many Relation
 	# class Meta:
 	# 	ordering = ('event_date',)
 

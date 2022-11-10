@@ -2,7 +2,7 @@
 
     {% block content %}
 
-      <h1>Venue Details</h1> 
+      <h1>Venue Details</h1>
           <div class="card bg-light mb-3">
             <div class="card-header"><b>Venue name: {{venue.name | title}}</b>
               {% if venue.book == 1 %}
@@ -27,7 +27,7 @@
                   {% endif %}
                   {% if venue.owner %}
                   <li>Owner ID: {{venue.owner}}</li>
-                  <li>Owner name: {{user.id}}</li>
+                  <!-- <li>Owner name: {{user.id}}</li> -->
                   {% endif %}
                 </ul>
               </div>
@@ -35,6 +35,6 @@
                 <a id="back" style="padding:8px;text-decoration: none;color: black;" href="{% url 'list-venue' %}">Go Back</a><br><br>
               </div>
           </div>
-
+          
     {% endblock content %}
     
