@@ -1,7 +1,10 @@
 {% extends 'events/base.html' %}
     {% block content %}
     <div class="row">
-      <div class="col-8"><h1>Venue List</h1></div>
+      <div class="col-8">
+        <h1>Venue List</h1>
+        <p>Total Venue: {{ venue_count }}</p>
+      </div>
       {% if request.user.is_authenticated %}
       <div class="col-4">
         <div class="dropdown">
@@ -26,7 +29,7 @@
           <td>
             <div class="row">
               <div class="col-8">
-                {{forloop.count}}
+                <!-- {{forloop.counter}} -->
                 <a class="float-left" style="color:white !important; text-decoration: none;" href="{% url 'show-venue' venue.id %}">{{venue.name | title }}</a>
                 <span>
                 <!--   {% if user.id == venue.owner %}

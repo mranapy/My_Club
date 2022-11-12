@@ -44,8 +44,9 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime('%B'))
  
 # ---------- SHOW ALL EVENT ----------
 def all_events(request):
+	event_count = Event.objects.all().count()
 	events = Event.objects.all().order_by('-event_date')
-	return render(request, 'events/events_list.html', {'events':events})
+	return render(request, 'events/events_list.html', {'events':events,'event_count':event_count})
 
 # class VenueList(ListView):
 # 	model = Event
@@ -56,7 +57,7 @@ def all_events(request):
 # ---------- SHOW ALL VENUE ----------
 def all_venues(request):
 	# venues = Venue.objects.all().order_by('?')
-	# venue_list = Venue.objects.all()
+	venue_count = Venue.objects.all().count()
 
 	# Setup pagination
 	p = Paginator(Venue.objects.all().order_by('name'),2)
@@ -64,7 +65,7 @@ def all_venues(request):
 	venues = p.get_page(page)
 	nums = "a" * venues.paginator.num_pages
 	# context = {'venue_list':venue_list}
-	return render(request, 'events/venue_list.html', {'venues':venues,'nums':nums})
+	return render(request, 'events/venue_list.html', {'venues':venues,'nums':nums,'venue_count':venue_count})
 
 # ---------- ADD VENUE ----------
 
@@ -112,6 +113,7 @@ def deleteVenue(request, venue_id):
 def show_venue(request, venue_id):
 	try:
 		venue = Venue.objects.get(pk=venue_id)
+		
 	except VenuesModel.DoesNotExist:
             return HttpResponse('Exception: Data Not Found')
 	return render(request, 'events/show_venue.html', {'venue':venue})
