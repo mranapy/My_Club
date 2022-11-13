@@ -12,7 +12,9 @@
               {% endif %}
             </div>
               <div class="card-body">
-                <ul>
+                <div class="row">
+                  <div class="col-7">
+                    <ul>
                   {% if venue.address %}
                   <li>Address: {{venue.address}}</li>
                   {% endif %}
@@ -30,6 +32,13 @@
                   <!-- <li>Owner name: {{user.id}}</li> -->
                   {% endif %}
                 </ul>
+                  </div>
+                  <div class="col-5">
+                    {% if venue.images %}
+                  <img src="{{venue.images.url}}" target="_blank" width="300">
+                  {% endif %}
+                  </div>
+                </div>
               </div>
               <div class="text-center">
                 <a id="back" style="padding:8px;text-decoration: none;color: black;" href="{% url 'list-venue' %}">Go Back</a><br><br>

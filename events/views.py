@@ -74,7 +74,7 @@ def add_venue(request):
 	if request.user.is_authenticated:
 		submitted = False
 		if request.method == "POST":
-			venueform = VenueForm(request.POST)
+			venueform = VenueForm(request.POST, request.FILES)
 			if venueform.is_valid():
 				venue = venueform.save(commit=False)
 				venue.owner = request.user.id  # Logged in user
@@ -93,7 +93,7 @@ def add_venue(request):
 def update_venue(request, venue_id):
 	if request.user.is_authenticated:
 		venue = Venue.objects.get(pk=venue_id)
-		form = VenueForm(request.POST or None, instance=venue)
+		form = VenueForm(request.POST or None, request.FILES or None ,instance=venue)
 		if form.is_valid():
 			form.save()
 			return redirect('list-venue')

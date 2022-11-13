@@ -11,6 +11,7 @@ class Venue(models.Model):
 	email = models.EmailField('Email address',blank=True)
 	owner = models.PositiveIntegerField(verbose_name='Venue Owner', blank=False, default=1)
 	book = models.BooleanField(default=False, blank=True)
+	images = models.ImageField(upload_to='venue/images/',verbose_name='Upload Image')
 	
 	def clean(self):
 		self.name = self.name.capitalize()

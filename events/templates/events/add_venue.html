@@ -6,7 +6,7 @@
           {% if submitted %}
           Venue added successfully!
         {% else %}
-      <form action="" method="POST" style="padding:30px;" novalidate>
+      <form action="" method="POST" style="padding:30px;" novalidate enctype="multipart/form-data">
         {% csrf_token %}
         {% if form.non_field_errors %}
           {% for error in form.non_field_error %}
