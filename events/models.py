@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from datetime import date
 # Venue Model
 class Venue(models.Model):
 	name = models.CharField(verbose_name='Venue name', max_length=120)
@@ -49,5 +49,20 @@ class Event(models.Model):
 	def __str__(self):
 		return self.name
 
+	@property
+	def Days_till(self):
+		today = date.today()
+		days_till = self.event_date.date() - today
+		days_till_stipped = str(days_till).split(',',1)[0]
+		return days_till_stipped
+
+	@property
+	def Is_Past(self):
+		today = date.today()
+		if self.event_date.date() < today:
+			thing = "Past"
+		else:
+			thing = "Upcoming"
+		return thing
 
 

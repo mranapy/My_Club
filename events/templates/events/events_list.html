@@ -21,11 +21,14 @@
       {% endif %}
       {% for event in events %}
       <div class="card bg-light mb-3">
-      <div class="card-header" style="color:#2196f3;"> <strong> <h4>{{event | title}}</h4> </strong></div>
+      <div class="card-header" style="color:#2196f3;"> <strong> <h4>{{event | title}}</h4><span class="float-right text-danger">{{event.Is_Past}}</span> </strong>
+      </div>
       <div class="card-body">
     <h5 class="card-title">Venue: {{event.venue | title}}</h5>
     <ul>
         <li>Date: {{event.event_date}}</li>
+        <li class="text-danger">Days Till Event: {{event.Days_till}}</li>
+        <li>Occoured: {{event.Is_Past}}</li>
         <li>Venue Website: <a href="{{event.venue.web}}" target="_blank">{{event.venue.web}}</a> </li>
         <li>Venue Address: {{event.venue.address}}</li>
         <!-- <li>Manager: {{event.manager}}</li> -->

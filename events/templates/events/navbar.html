@@ -28,7 +28,7 @@
           @{{user}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item disabled">{{user.first_name}} {{user.last_name}}</a>
+          <a class="dropdown-item disabled text-danger"><strong>{{user.first_name}} {{user.last_name}}</strong></a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'my-events' %}">My Events</a>
           <div class="dropdown-divider"></div>
