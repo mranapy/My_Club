@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.contrib import messages
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
@@ -44,12 +45,37 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime('%B'))
 	}
 	return render(request, 'events/home.html', context)
  
+# ---------- Admin Approval Events ----------
+def eventApproval(request):
+	if request.user.is_authenticated:
+		if request.user.is_superuser:
+			events_list = Event.objects.all().order_by('-event_date')
+			event_count = Event.objects.all().count()
+
+			if request.method == "POST":
+				id_list = request.POST.getlist('boxes')
+				# print(id_list)
+				# Unchecked list
+				events_list.update(approved=False)
+				# Update database
+				for x in id_list:
+					Event.objects.filter(pk=int(x)).update(approved=True)
+
+				messages.success(request,"Event approved update successfully..!")
+				return redirect('list-events')
+			else:
+				return render(request, 'events/event-approval.html',{'events_list':events_list,'event_count':event_count})
+		else:
+			messages.success(request,'You are not Superuser...')
+	else:
+		return redirect('login')
+
 # ---------- SHOW ALL EVENT ----------
 def all_events(request):
 	event_count = Event.objects.all().count()
 	today = timezone.now()
 	events = Event.objects.all().order_by('event_date')
-	
+
 	context = {
 		'events': events,
 		'event_count':event_count,

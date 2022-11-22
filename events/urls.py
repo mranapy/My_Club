@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('<int:year>/<str:month>/', views.home, name="home"),
     path('events/', views.all_events, name='list-events'),
+    path('event_approval/', views.eventApproval, name='event-approval'),
     path('upcoming-events/', views.futurEvents, name='upcoming-events'),
     path('past-events/', views.pastEvent, name='past-events'),
     path('venues/', views.all_venues, name='list-venue'),

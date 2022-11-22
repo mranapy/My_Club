@@ -40,6 +40,7 @@ class Event(models.Model):
 	manager = models.ForeignKey(User, blank=True,on_delete=models.CASCADE) # Many to one Relation
 	description = models.TextField(blank=True)
 	attendees = models.ManyToManyField(MyClubUser,blank=True) # Many to Many Relation
+	approved = models.BooleanField("Approved", default=False)
 	# class Meta:
 	# 	ordering = ('-event_date',)
 

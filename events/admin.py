@@ -13,7 +13,7 @@ class VenueAdmin(admin.ModelAdmin): # For backend
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin): # For backend 
-	fields = (('name','venue'),'event_date','description','manager')
+	fields = (('name','venue'),'event_date','description','manager','approved')
 	list_display = ('name','event_date','venue')
 	list_filter = ('event_date','venue')
 	# ordering = ('event_date',)

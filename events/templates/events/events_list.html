@@ -19,7 +19,9 @@
       </div>
     </div>
       {% endif %}
+      
       {% for event in events %}
+      {% if event.approved %}
       <div class="card bg-light mb-3">
       <div class="card-header" style="color:#2196f3;">
         <div class="row">
@@ -41,7 +43,8 @@
         <li>Venue Address: {{event.venue.address}}</li>
         <!-- <li>Manager: {{event.manager}}</li> -->
         <li>Manager: Mr. {{event.manager.first_name}} {{event.manager.last_name}}</li>
-        <li>Description: {{event.description}}</li> 
+        <li>Description: {{event.description}}</li>
+        <li>Approved: {{event.approved}}</li>
         <li>Attendees:<br/>
         {% for userattend in event.attendees.all %}
          > {{userattend}}<br> <!-- {{event.attendees.all}} -->
@@ -68,6 +71,7 @@
     {% endif %}
   {% endif %}
 </div>
+{% endif %}
       {% endfor %}
       {% for x in object_list %}
         {{x}}
