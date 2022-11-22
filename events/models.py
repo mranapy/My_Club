@@ -65,4 +65,10 @@ class Event(models.Model):
 			thing = "Upcoming"
 		return thing
 
+	@property
+	def updateDelete(self):
+		now  = today = date.today()
+		if event_date < now:
+
+			return now
 

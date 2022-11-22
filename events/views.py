@@ -49,6 +49,7 @@ def all_events(request):
 	event_count = Event.objects.all().count()
 	today = timezone.now()
 	events = Event.objects.all().order_by('event_date')
+	
 	context = {
 		'events': events,
 		'event_count':event_count,
