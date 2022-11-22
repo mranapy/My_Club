@@ -31,6 +31,7 @@
                   <li>Owner ID: {{venue.owner}}</li>
                   <!-- <li>Owner name: {{user.id}}</li> -->
                   {% endif %}
+                  <!-- <li>Venue Owner: {{venue.owner}}</li> -->
                 </ul>
                   </div>
                   <div class="col-5">
@@ -43,6 +44,9 @@
               <div class="text-center">
                 <a id="back" style="padding:8px;text-decoration: none;color: black;" href="{% url 'list-venue' %}">Go Back</a><br><br>
               </div>
+              <!-- {% for event in events %}
+              <a class="float-left" style="color:white !important; text-decoration: none;" href="{% url 'show-venue' venue.id %}">{{venue.name | title }}</a>
+              {% endfor %} -->
           </div>
           
     {% endblock content %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
+from django.contrib.auth.models import User
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
@@ -54,7 +55,7 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime('%B'))
 
 # ---------- SHOW ALL VENUE ----------
 def all_venues(request):
-	# venues = Venue.objects.all().order_by('?')
+	# venues = Venue.objects.all().order_by('?') # Random List View
 	venue_count = Venue.objects.all().count()
 
 	# Setup pagination
@@ -111,10 +112,14 @@ def deleteVenue(request, venue_id):
 def show_venue(request, venue_id):
 	try:
 		venue = Venue.objects.get(pk=venue_id)
+		venue_owner = Venue.objects.get(pk=venue.owner)
+		# Grab the events from that vanue
+		# events = Event.objects.event_set.all()
+
 		
 	except VenuesModel.DoesNotExist:
             return HttpResponse('Exception: Data Not Found')
-	return render(request, 'events/show_venue.html', {'venue':venue})
+	return render(request, 'events/show_venue.html', {'venue':venue,'venue_owner':venue_owner})
 
 
 # ---------- ADD EVENT ----------
@@ -148,12 +153,27 @@ def addEvent(request):
 	else:
 		return redirect('login')
 
+# Venue Events
+def venueEvents(request,venue_id):
+	# Grab the venue
+	venue = Venue.objects.get(id=venue_id)
+	#Grab the events from that venue
+	events = venue.event_set.all()
+	if events:
+		return render(request,'events/venue-events.html',{'events':events})
+	else:
+		messages.success(request,"That Venue Has No Events At This Time..!")
+		return redirect('admin-approval')
+
 # ---------- Admin Approval Events ----------
-def eventApproval(request):
+def AdminApproval(request):
 	if request.user.is_authenticated:
 		if request.user.is_superuser:
+			venue_count = Venue.objects.all().count()
+			venue_list = Venue.objects.all().order_by('name')
 			events_list = Event.objects.all().order_by('-event_date')
 			event_count = Event.objects.all().count()
+			user_count = User.objects.all().count()
 
 			if request.method == "POST":
 				id_list = request.POST.getlist('boxes')
@@ -167,7 +187,14 @@ def eventApproval(request):
 				messages.success(request,"Event approved update successfully..!")
 				return redirect('list-events')
 			else:
-				return render(request, 'events/event-approval.html',{'events_list':events_list,'event_count':event_count})
+				context = {
+					'venue_count':venue_count,
+					'venue_list':venue_list,
+					'events_list':events_list,
+					'event_count':event_count,
+					'user_count':user_count
+				}
+				return render(request, 'events/admin-approval.html',context)
 		else:
 			messages.success(request,'You are not Superuser...')
 	else:
@@ -219,6 +246,7 @@ def deleteEvent(request, event_id):
 	if request.user.is_authenticated:
 		event = Event.objects.get(pk=event_id)
 		event.delete()
+		messages.success(request,"This Event Delete Successfully..!")
 		return redirect('list-events')
 	else:
 		return redirect('login')

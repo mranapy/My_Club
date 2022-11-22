@@ -4,7 +4,7 @@ from django.contrib import messages
 from . forms import SignUpForm
 
 # Create your views here.
-def membersAdd(request):
+def memberLogin(request):
 	if not request.user.is_authenticated:
 		if request.method == "POST":
 			username = request.POST['username']
@@ -23,7 +23,7 @@ def membersAdd(request):
 		return redirect('home')
 
 
-def membersSignup(request):
+def memberSignup(request):
 	if not request.user.is_authenticated:
 		if request.method == "POST":
 			form = SignUpForm(request.POST)
@@ -37,7 +37,7 @@ def membersSignup(request):
 	else:
 		return redirect('home')
 
-def membersLogout(request):
+def memberLogout(request):
 	logout(request)
 	messages.warning(request,'Logout Successfully!!')
 	return redirect('login')
