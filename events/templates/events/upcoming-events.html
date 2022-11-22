@@ -1,38 +1,26 @@
 {% extends 'events/base.html' %}
 
     {% block content %}
-      {% if request.user.is_authenticated %}
           <div class="row">
       <div class="col-8">
-        <h1>All Events List</h1>
-        <p>Total Event: {{ event_count }}</p>
-      </div>
-      <div class="col-4">
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download</button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="{% url 'event-text' %}">Text File</a><div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">PDF File</a><div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">CSV File</a>
-            </div>
-        </div>
+        <h2 class="text-danger">Upcoming Events</h2>
+        <!-- <p>Total Event: {{ event_count }}</p> -->
       </div>
     </div>
-      {% endif %}
-      {% for event in events %}
+      {% for event in future_events %}
       <div class="card bg-light mb-3">
       <div class="card-header" style="color:#2196f3;">
         <div class="row">
           <div class="col-8">
-            <strong><h4 style="padding:10px">{{event | title}}</h4></strong>
+            <strong><h5>{{event | title}}</h5></strong>
           </div>
-          <div class="col-4">
+         <!--  <div class="col-4">
             <strong class="float-right text-danger" style="padding:10px;background-color:bisque;">{{event.Is_Past}}</strong>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="card-body">
-    <h5 class="card-title">Venue: {{event.venue | title}}</h5>
+    <h6 class="card-title">Venue: {{event.venue | title}}</h6>
     <ul>
         <li>Date: {{event.event_date}}</li>
         <li class="text-danger">Days Till Event: {{event.Days_till}}</li>
@@ -68,9 +56,6 @@
     {% endif %}
   {% endif %}
 </div>
-      {% endfor %}
-      {% for x in object_list %}
-        {{x}}
       {% endfor %}
     {% endblock content %}
     

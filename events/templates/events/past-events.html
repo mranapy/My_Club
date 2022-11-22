@@ -1,0 +1,43 @@
+{% extends 'events/base.html' %}
+
+    {% block content %}
+          <div class="row">
+            <div class="col-8">
+              <h2 class="text-danger">Past Events</h2>
+            </div>
+          </div>
+      {% for event in past_events %}
+      <div class="card bg-light mb-3">
+      <div class="card-header" style="color:#2196f3;">
+        <div class="row">
+          <div class="col-8">
+            <strong><h5>{{event | title}}</h5></strong>
+          </div>
+         <!--  <div class="col-4">
+            <strong class="float-right text-danger" style="padding:10px;background-color:bisque;">{{event.Is_Past}}</strong>
+          </div> -->
+        </div>
+      </div>
+      <div class="card-body">
+    <h6 class="card-title">Venue: {{event.venue | title}}</h6>
+    <ul>
+        <li>Date: {{event.event_date}}</li>
+        <li class="text-danger">Days Till Event: {{event.Days_till}}</li>
+        <li>Occoured: {{event.Is_Past}}</li>
+        <li>Venue Website: <a href="{{event.venue.web}}" target="_blank">{{event.venue.web}}</a> </li>
+        <li>Venue Address: {{event.venue.address}}</li>
+        <!-- <li>Manager: {{event.manager}}</li> -->
+        <li>Manager: Mr. {{event.manager.first_name}} {{event.manager.last_name}}</li>
+        <li>Description: {{event.description}}</li> 
+        <li>Attendees:<br/>
+        {% for userattend in event.attendees.all %}
+         > {{userattend}}<br> <!-- {{event.attendees.all}} -->
+        {% endfor %}
+        </li>
+      </ul>
+        <br>
+  </div>
+</div>
+      {% endfor %}
+    {% endblock content %}
+    

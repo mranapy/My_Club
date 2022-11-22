@@ -14,6 +14,8 @@ import csv
 # Import paginator stuff
 from django.core.paginator import Paginator
 
+# For Upcoming & Past Events
+from django.utils import timezone
 # Create your views here.
 def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
 	month = month.capitalize()
@@ -45,9 +47,23 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime('%B'))
 # ---------- SHOW ALL EVENT ----------
 def all_events(request):
 	event_count = Event.objects.all().count()
-	events = Event.objects.all().order_by('-event_date')
-	return render(request, 'events/events_list.html', {'events':events,'event_count':event_count})
+	today = timezone.now()
+	events = Event.objects.all().order_by('event_date')
+	context = {
+		'events': events,
+		'event_count':event_count,
+	}
+	return render(request, 'events/events_list.html', context)
 
+def futurEvents(request):
+	today = timezone.now()
+	future_events = Event.objects.filter(event_date__gte=today).order_by('event_date')
+	return render(request, 'events/upcoming-events.html', {'future_events':future_events})
+
+def pastEvent(request):
+	today = timezone.now()
+	past_events = Event.objects.filter(event_date__lt=today).order_by('-event_date')
+	return render(request, 'events/past-events.html', {'past_events':past_events})
 # class VenueList(ListView):
 # 	model = Event
 # 	template_name = 'events/venue_list.html'

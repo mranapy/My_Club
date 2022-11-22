@@ -41,7 +41,7 @@ class Event(models.Model):
 	description = models.TextField(blank=True)
 	attendees = models.ManyToManyField(MyClubUser,blank=True) # Many to Many Relation
 	# class Meta:
-	# 	ordering = ('event_date',)
+	# 	ordering = ('-event_date',)
 
 	def clean(self):
 		# self.name = self.name.capitalize()
