@@ -11,7 +11,7 @@
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Text File</a><div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'event-text' %}">Text File</a><div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">PDF File</a><div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">CSV File</a>
             </div>
@@ -21,7 +21,15 @@
       {% endif %}
       {% for event in events %}
       <div class="card bg-light mb-3">
-      <div class="card-header" style="color:#2196f3;"> <strong> <h4>{{event | title}}</h4><span class="float-right text-danger">{{event.Is_Past}}</span> </strong>
+      <div class="card-header" style="color:#2196f3;">
+        <div class="row">
+          <div class="col-8">
+            <strong><h4 style="padding:10px">{{event | title}}</h4></strong>
+          </div>
+          <div class="col-4">
+            <strong class="float-right text-danger" style="padding:10px;background-color:bisque;">{{event.Is_Past}}</strong>
+          </div>
+        </div>
       </div>
       <div class="card-body">
     <h5 class="card-title">Venue: {{event.venue | title}}</h5>

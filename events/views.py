@@ -181,6 +181,20 @@ def deleteEvent(request, event_id):
 		return redirect('login')
 
 
+# Generate Text File for Event
+def EventText(request):
+	if request.user.is_authenticated:
+		file_name = 'events.txt'
+		lines = []
+		events = Event.objects.all()
+		for event in events:
+			lines.append('{0};\n{1};\n{2};\n{3};\n{4};\n'.format(event.name,event.event_date,event.venue,event.manager,event.description )+'\n')
+			response_content = '\n'.join(lines)
+		response = HttpResponse(response_content, content_type="text/plain,charset=utf8")
+		response['Content-Disposition'] = 'attachment; filename={0}'.format(file_name)
+		return response
+	else:
+		return redirect('login')
 # ---------- SEARCH VENUE AND EVENT ----------
 def search_any(request):
 	if request.method == "POST":
