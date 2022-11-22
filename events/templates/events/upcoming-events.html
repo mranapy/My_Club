@@ -14,16 +14,16 @@
           <div class="col-8">
             <strong><h5>{{event | title}}</h5></strong>
           </div>
-         <!--  <div class="col-4">
-            <strong class="float-right text-danger" style="padding:10px;background-color:bisque;">{{event.Is_Past}}</strong>
-          </div> -->
+          <div class="col-4">
+            <strong class="float-right text-danger" style="padding:10px;background-color:bisque;"><span class="text-dark">Days Till Event </span>{{event.Days_till}}</strong>
+          </div>
         </div>
       </div>
       <div class="card-body">
     <h6 class="card-title">Venue: {{event.venue | title}}</h6>
     <ul>
         <li>Date: {{event.event_date}}</li>
-        <li class="text-danger">Days Till Event: {{event.Days_till}}</li>
+        <!-- <li class="text-danger">Days Till Event: {{event.Days_till}}</li> -->
         <li>Occoured: {{event.Is_Past}}</li>
         <li>Venue Website: <a href="{{event.venue.web}}" target="_blank">{{event.venue.web}}</a> </li>
         <li>Venue Address: {{event.venue.address}}</li>

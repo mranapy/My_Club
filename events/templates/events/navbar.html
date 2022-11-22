@@ -16,11 +16,15 @@
           Events
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'list-events' %}">All Events</a>
+          <!-- {% if request.user.is_authenticated %}
+        <a class="dropdown-item text-center" href="{% url 'add-event' %}">Add Event</a>
+        {% endif %}
+        <div class="dropdown-divider"></div> -->
+          <a class="dropdown-item text-center" href="{% url 'list-events' %}">All Events</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'upcoming-events' %}">Upcoming Events</a>
+          <a class="dropdown-item text-center text-danger" href="{% url 'upcoming-events' %}">Upcoming Events</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'past-events' %}">Past Events</a>
+          <a class="dropdown-item text-center" href="{% url 'past-events' %}">Past Events</a>
         </div>
       </li>
       <li class="nav-item active">
