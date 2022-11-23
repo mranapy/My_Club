@@ -113,13 +113,14 @@ def show_venue(request, venue_id):
 	try:
 		venue = Venue.objects.get(pk=venue_id)
 		venue_owner = Venue.objects.get(pk=venue.owner)
+
 		# Grab the events from that vanue
-		# events = Event.objects.event_set.all()
+		events = venue.event_set.all()
 
 		
 	except VenuesModel.DoesNotExist:
             return HttpResponse('Exception: Data Not Found')
-	return render(request, 'events/show_venue.html', {'venue':venue,'venue_owner':venue_owner})
+	return render(request, 'events/show_venue.html', {'venue':venue,'venue_owner':venue_owner,'events':events})
 
 
 # ---------- ADD EVENT ----------
@@ -174,6 +175,7 @@ def AdminApproval(request):
 			events_list = Event.objects.all().order_by('-event_date')
 			event_count = Event.objects.all().count()
 			user_count = User.objects.all().count()
+			
 
 			if request.method == "POST":
 				id_list = request.POST.getlist('boxes')
