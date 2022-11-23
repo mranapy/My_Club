@@ -10,7 +10,7 @@
             <strong style="padding:10px">Total Events: {{ event_count }}</strong><br>
             <strong style="padding:10px">Total Users: {{ user_count }}</strong>
           </div>
-        </div><hr>
+        </div><br>
         <table class="table table-hover table-dark">
             <thead>
               <tr>
@@ -26,9 +26,8 @@
               <td class="text-center"><a class="float-left btn btn-info" style="color:white !important; text-decoration: none;" href="{% url 'venue-events' venue.id %}">List Events</a></td>
             </tr>
           </tbody>{% endfor %}
-        </table>
-        <h2>Event Approved List</h2>
-        <hr>
+        </table><br>
+        <h2>Event Approved List</h2><br>
         <form action="" method="POST">
           {% csrf_token %}
         

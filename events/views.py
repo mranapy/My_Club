@@ -199,7 +199,9 @@ def AdminApproval(request):
 				return render(request, 'events/admin-approval.html',context)
 		else:
 			messages.success(request,'You are not Superuser...')
+			return redirect('/')
 	else:
+		messages.success(request,'You are not login...')
 		return redirect('login')
 
 # ---------- SHOW ALL EVENT ----------

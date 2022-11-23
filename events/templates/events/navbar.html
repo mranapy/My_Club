@@ -47,6 +47,8 @@
           {% if user.is_superuser %}
           <a class="dropdown-item" href="{% url 'admin-approval' %}">Approved Event</a>
           <div class="dropdown-divider"></div>
+          {% else %}
+          
           {% endif %}
           <a class="dropdown-item" href="{% url 'my-events' %}">My Events</a>
           <div class="dropdown-divider"></div>
