@@ -1,5 +1,5 @@
 {% extends 'events/base.html' %}
-
+{% block title_block %}All Event | My Club{% endblock title_block %}
     {% block content %}
       {% if request.user.is_authenticated %}
           <div class="row">
