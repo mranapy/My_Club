@@ -47,6 +47,8 @@
           {% if user.is_superuser %}
           <a class="dropdown-item" href="{% url 'admin-approval' %}">Approved Event</a>
           <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'Blog:create-blog' %}">Create Blog</a>
+          <div class="dropdown-divider"></div>
           {% else %}
           
           {% endif %}
@@ -60,9 +62,9 @@
           <a class="dropdown-item" href="{% url 'signup' %}">Sign Up</a> -->
         </div>
       </li>
-      <li class="nav-item active">
+      {% comment %} <li class="nav-item active">
         <a class="nav-link" href="{% url 'Blog:create-blog' %}">Blog</a>
-      </li>
+      </li> {% endcomment %}
       {% else %}
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -72,7 +74,9 @@
       </li>
       
       {% endif %}
-      
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'Blog:list-blog' %}">Blog</a>
+      </li>
       <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Download

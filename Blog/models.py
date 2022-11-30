@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class Blog(models.Model):
 	title = models.CharField('Blog Title',max_length=150, blank=False, null=False)
 	slug = models.SlugField(max_length=264, unique=True)
-	description = models.TextField('Description', max_length=400,blank=False,null=False)
+	description = models.TextField('Description', max_length=1000,blank=False,null=False)
 	images = models.ImageField(upload_to='blog/postImages/',verbose_name='Upload Image')
 	publish_date = models.DateField(auto_now_add=True)
 	update_date = models.DateTimeField(auto_now=True)
@@ -13,5 +13,6 @@ class Blog(models.Model):
 		return self.title
 
 	class Meta:
-		ordering = ['-publish_date',]
+		ordering = ['-id',]
+		
     

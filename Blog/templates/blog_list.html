@@ -1,21 +1,26 @@
 {% extends 'events/base.html' %}
 {% load custom_filter %}
 {% block title_block %}My Club{% endblock title_block %}
+{% block body_color %}
+
+{% endblock body_color %}
     {% block content %}
     {% for blog in listblog %}
-<h3>{{blog.title}}</h3>
-<h6><i>Publish date: {{blog.publish_date}}</i></h6>
-<div class="row">
-    <div class=col-sm-4>
+        <div class=" col-md-10 offset-md-1 shadow p-3 mb-5 rounded">
+            <h3>{{blog.title}}</h3>
+            <h6><i>Publish date: {{blog.publish_date}}</i></h6>
+        <div class="row">
+        <div class=col-sm-4>
         <img src="/media/{{blog.images}}" alt="{{blog.title}}" width="100%">
-    </div>
-    <div class="col-sm-8">
+        </div>
+        <div class="col-sm-8">
         <p>{{blog.description|range_filter|linebreaks}} <a href="{% url 'Blog:blog-details' slug=blog.slug %}">Read More</a></p>
         
         <h6>Posted By: <a href="#">@{{blog.blog_author}}</a> </h6>
         <h6>{{blog.count}}</h6>
     </div>
 </div><br>
+            </div>
     {% endfor %}
     {% endblock content %}
     
