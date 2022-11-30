@@ -116,10 +116,8 @@ def show_venue(request, venue_id):
 
 		# Grab the events from that vanue
 		events = venue.event_set.all()
-
-		
-	except VenuesModel.DoesNotExist:
-            return HttpResponse('Exception: Data Not Found')
+	except Venue.DoesNotExist:
+		return HttpResponse('Exception: Data Not Found')
 	return render(request, 'events/show_venue.html', {'venue':venue,'venue_owner':venue_owner,'events':events})
 
 

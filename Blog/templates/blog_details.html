@@ -1,0 +1,22 @@
+{% extends 'events/base.html' %}
+{% load custom_filter %}
+{% block title_block %}My Club{% endblock title_block %}
+    {% block content %}
+
+<h3>{{blogdetails.title}}</h3>
+<h6><i>Publish date: {{blogdetails.publish_date}}</i></h6>
+<div class="row">
+    <div class=col-sm-4>
+        <img src="/media/{{blogdetails.images}}" alt="{{blog.title}}" width="100%">
+    </div>
+    <div class="col-sm-8">
+        <p>{{blogdetails.description}}</p>
+        
+        <h6>Posted By: <a href="#">@{{blogdetails.blog_author}}</a> </h6>
+        <h6>{{blog.count}}</h6>
+    </div>
+</div>
+
+    {% endblock content %}
+    
+  

@@ -60,6 +60,9 @@
           <a class="dropdown-item" href="{% url 'signup' %}">Sign Up</a> -->
         </div>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'Blog:create-blog' %}">Blog</a>
+      </li>
       {% else %}
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -67,7 +70,9 @@
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'signup' %}">Registration</a>
       </li>
+      
       {% endif %}
+      
       <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Download

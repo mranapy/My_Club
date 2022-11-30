@@ -6,7 +6,12 @@ class Blog(models.Model):
 	slug = models.SlugField(max_length=264, unique=True)
 	description = models.TextField('Description', max_length=400,blank=False,null=False)
 	images = models.ImageField(upload_to='blog/postImages/',verbose_name='Upload Image')
-	publish_date = models.DateTimeField(verbose_name='Blog date', auto_now_add=True)
+	publish_date = models.DateField(auto_now_add=True)
 	update_date = models.DateTimeField(auto_now=True)
 	blog_author = models.ForeignKey(User, blank=True,on_delete=models.CASCADE)
+	def __str__(self):
+		return self.title
+
+	class Meta:
+		ordering = ['-publish_date',]
     
